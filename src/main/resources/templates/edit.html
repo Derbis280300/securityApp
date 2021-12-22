@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main.html"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div layout:fragment="layout">
+<div class="row">
+
+<div class="col-6 mx-auto" th:if="${item}!=null">
+
+    <form th:action="@{'/toEdit/'+${item.id}}" method="post" >
+        <div class="mt-3">
+            <label>Image:</label>
+            <input type="text" name="pic" class="form-control" th:value="${item.picture}">
+        </div>
+        <div class="mt-3">
+            <label>Name:</label>
+            <input type="text" class="form-control" name="name" th:value="${item.name}">
+        </div>
+        <div class="mt-3">
+            <label>Price:</label>
+            <input type="text" class="form-control" name="price" th:value="${item.price}">
+        </div>
+        <div class="mt-3">
+            <label>Description:</label>
+            <textarea  class="form-control" name="description" th:text="${item.description}"></textarea>
+        </div>
+
+        <div class="mt-3">
+            <label>Brands:</label>
+            <select class="form-control" name="brand">
+                <option th:each="br:${brands}" th:text="${br.name+','+br.country.name}" th:value="${br.id}"></option>
+            </select>
+        </div>
+
+
+
+        <button  class="btn btn-secondary mt-2">Edit item</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Delete
+        </button>
+      </form>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/delete" method="post" th:if ="${item}!=null">
+                    <div class="modal-header">
+                        <input type="hidden" name="id" th:value="${item.id}">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirm to delete item</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button  class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+     </div>
+    </div>
+
+    <div class="row mt-5" id="categoriesDiv">
+        <div class="col-6 mx-auto">
+            <div  th:if="${item}!=null">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr th:each="cat:${item.categories}">
+                        <form action="/unassignCategory" method="post">
+                            <input type="hidden" name="item_id" th:value="${item.id}">
+                            <input type="hidden" name="cat_id" th:value="${cat.id}">
+                            <td th:text="${cat.name}"></td>
+                            <td width="10%"  >
+                                <button class="btn btn-danger ">-</button>
+                            </td>
+                        </form>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5" id="postCategoriesDiv" th:if="${item}!=null">
+        <div class="col-6 mx-auto">
+            <table class="table table-striped">
+                <tbody>
+                <tr th:each="ct:${cats}">
+                    <form action="/assignCategory" method="post">
+                        <input type="hidden" name="item_id" th:value="${item.id}">
+                        <input type="hidden" name="cat_id" th:value="${ct.id}">
+                        <td th:text="${ct.name}"></td>
+                        <td width="10%">
+                            <button class="btn btn-success ">+</button>
+                        </td>
+                    </form>
+
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+
+</html>

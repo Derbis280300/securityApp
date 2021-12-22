@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main.html">
+
+<div layout:fragment="layout">
+
+    <div class="container">
+     <div class="row mt-3">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-header" style="background-color: #39353f;color: white">
+                    DASHBOARD
+                </div>
+                <ul class="list-group list-group-flush">
+                    <a class="list-group-item" style="text-decoration: none;color: #0f0c11;" th:href="@{'/moderator'}" th:text="#{brand.product}"></a>
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="row">
+                <div class="col-3">
+                    <p th:text="#{item.title}"></p>
+                </div>
+                <div class="col-8" style="padding-left: 430px;"  >
+                    <a  style="text-decoration: none;color: #737271"   th:href="@{'/addItem'}" th:text="#{brand.add}"></a>
+                </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>ID</td>
+                <td th:text="#{brand.name}"></td>
+                <td th:text="#{brand.brands}"></td>
+                <td th:text="#{item.price}"></td>
+                <td th:text="#{label.details}"></td>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="it:${items}">
+                <td th:text="${it.id}"></td>
+                <td th:text="${it.name}"></td>
+                <td th:text="${it.brands.name+','+it.brands.country.name}"></td>
+                <td th:text="${it.price}"><i class="fas fa-dollar-sign"></i></td>
+                <td>
+                    <a class="btn  btn-sm" th:href="@{'/details/'+${it.id}}" ><i class="fas fa-info-circle"  style="font-size:20px;color:#676665;"></i></a>
+                </td>
+            </tr>
+            </tbody>
+
+
+
+        </table>
+
+
+            </div>
+
+
+        </div>
+      </div>
+    </div>
+     </div>
+
+</html>

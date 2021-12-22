@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Security</title>
+    <link rel="stylesheet" type="text/css" th:href="@{'/css/bootstrap.css'}">
+
+    <link rel="stylesheet" type="text/css" th:href="@{'fa/css/all.min.css'}">
+<style>
+    a {
+        color: #000080; /* Цвет обычной ссылки */
+        padding: 2px; /* Поля вокруг текста */
+    }
+
+    a:hover {
+        text-decoration: none; /* Убираем подчеркивание */
+        color: #060606; /* Цвет ссылки при наведении на нее курсора мыши */
+        background:#c9c5db;} /* Цвет фона */
+</style>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #39353f;">
+        <div class="container-fluid">
+             <a class="navbar-brand" th:href="@{'/'}"><i class="fab fa-shopware"></i>Group-11 ONLINE E-SHOP</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="isAnonymous()">
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{'/login'}" th:text="#{nav.login}"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{'/register'}" th:text="#{nav.register}">Register</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{current.langauge}">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="?lng=ru">Русский</a></li>
+                            <li><a class="dropdown-item" href="?lng=eng">English</a></li>
+                            <li><hr class="dropdown-divider"></li>
+
+                        </ul>
+                    </li>
+
+
+                </ul>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="isAuthenticated()" >
+                    <li class="nav-item">
+                        <a class="nav-link " aria-current="page" th:href="@{'/profile'}" th:text="${current_user!=null?current_user.full_name:''}" ></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " aria-current="page" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{'/admin'}" th:text="#{nav.admin}"  ></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " aria-current="page" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')" th:href="@{'/moderator'}" th:text="#{nav.moderator}" ></a>
+                    </li>
+
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="JavaScript:void(0)" onclick="signOut()"th:text="#{nav.signOut}"></a>
+                    </li>
+                    <form th:action="@{'/sign_out'}" method="post" id = "signOutForm">
+                    </form>
+                    <script type = "text/javascript">
+                        function signOut(){
+                            document.getElementById("signOutForm").submit();
+                        }
+                    </script>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{current.langauge}">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="?lng=ru">Русский</a></li>
+                            <li><a class="dropdown-item" href="?lng=eng">English</a></li>
+                            <li><hr class="dropdown-divider"></li>
+
+                        </ul>
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+        </div>
+    </nav>
+</div>
+
+    <div class="container">
+
+
+            <div layout:fragment="layout"></div>
+
+
+    </div>
+
+
+
+
+
+
+</body>
+
+
+<script type="text/javascript" th:src="@{'/js/bootstrap.js'}"></script>
+</html>

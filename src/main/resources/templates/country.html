@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main.html">
+
+<div layout:fragment="layout">
+
+    <div class="container">
+       <div class="row mt-3">
+          <div class="col-3">
+              <div class="card"  >
+                  <div class="card-header" style="background-color: #39353f;color: white" th:text="#{brand.dashbord}">
+
+                  </div>
+                  <ul class="list-group list-group-flush">
+                      <a class="list-group-item" style="text-decoration: none;color: #0f0c11;" th:href="@{'/admin'}" th:text="#{brand.product}"></a>
+                      <a class="list-group-item" style="text-decoration: none;color: #0f0c11;" th:href="@{'/countries'}" th:text="#{brand.country}">Countries</a>
+                      <a class="list-group-item" style="text-decoration: none;color: #0f0c11;" th:href="@{'/brands'}" th:text="#{brand.brands}"></a>
+                      <a class="list-group-item" style="text-decoration: none;color: #0f0c11;" th:href="@{'/categories'}" th:text="#{brand.cat}">Categories</a>
+                  </ul>
+              </div>
+        </div>
+        <div class="col-9">
+            <div class="row">
+        <div class="col-3">
+            <p  th:text="#{country.title}"></p>
+        </div>
+        <div class="col-8" style="padding-left: 420px;"  >
+            <a  style="text-decoration: none;  color:#676665 "   th:href="@{'/addCountry'}" th:text="#{country.add}" ></a>
+        </div>
+    </div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <td>Id</td>
+        <td th:text="#{brand.name}"></td>
+        <td th:text="#{brand.count}"></td>
+        <td th:text="#{label.edit}">Edit</td>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="co:${countries}">
+        <td th:text="${co.id}"></td>
+        <td th:text="${co.name}"></td>
+        <td th:text="${co.code}"></td>
+        <td>
+            <a class="btn  btn-sm" th:href="@{'/editCountry/'+${co.id}}" ><i class="fas fa-edit"  style="font-size:20px;color:#676665;"></i></a>
+        </td>
+    </tr>
+    </tbody>
+
+
+
+</table>
+
+    </div>
+
+</div>
+    </div>
+</div>
+
+</html>

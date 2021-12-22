@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main.html">
+<div layout:fragment="layout">
+
+    <div class="row">
+
+        <div class="col-6 mx-auto" th:if="${country}!=null">
+
+            <form th:action="@{'/toEditCountry/'+${country.id}}" method="post" >
+
+                <div class="mt-3">
+                    <label>Name:</label>
+                    <input type="text" class="form-control" name="name" th:value="${country.name}">
+                </div>
+                <div class="mt-3">
+                    <label>Logo Url:</label>
+                    <input type="text" class="form-control" name="code" th:value="${country.code}">
+                </div>
+
+
+                <button  class="btn btn-secondary mt-2">Edit country</button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Delete
+                </button>
+            </form>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="/deleteCountry" method="post" th:if ="${country}!=null">
+                            <div class="modal-header">
+                                <input type="hidden" name="id" th:value="${country.id}">
+                                <h5 class="modal-title" id="exampleModalLabel">Confirm to delete country</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button  class="btn btn-danger">Delete</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</html>
